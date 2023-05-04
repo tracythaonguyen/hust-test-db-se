@@ -80,7 +80,7 @@ CREATE TABLE customers (
   PRIMARY KEY (customer_id),
   CONSTRAINT fk_mem_type
     FOREIGN KEY (mem_type) 
-      REFERENCES membership_levels(mem_type)
+      REFERENCES membership_levels(mem_type) ON DELETE CASCADE
 );
 
 -- 
@@ -120,7 +120,7 @@ CREATE TABLE reservations (
   PRIMARY KEY (res_id),
   CONSTRAINT fk_table_id
     FOREIGN KEY (table_id) 
-      REFERENCES tables(table_id)
+      REFERENCES tables(table_id) ON DELETE CASCADE
 );
 
 -- TRIGGER
@@ -152,7 +152,7 @@ DROP TABLE IF EXISTS dishes;
 CREATE TABLE dishes (
   dish_id BIGSERIAL,
   dish_name VARCHAR(255),
-  discription VARCHAR(255),
+  description VARCHAR(255),
   price DECIMAL(10,2),
   dish_status INT DEFAULT 0,
   category_id BIGINT,
@@ -161,10 +161,10 @@ CREATE TABLE dishes (
   PRIMARY KEY (dish_id),
   CONSTRAINT fk_menu_id
     FOREIGN KEY (menu_id) 
-      REFERENCES menus(menu_id),
+      REFERENCES menus(menu_id) ON DELETE CASCADE,
   CONSTRAINT fk_category_id
     FOREIGN KEY (category_id) 
-      REFERENCES categories(category_id)
+      REFERENCES categories(category_id) ON DELETE CASCADE
 );
 
 -- 
@@ -179,10 +179,10 @@ CREATE TABLE event_dishes (
   PRIMARY KEY (event_id, dish_id),
   CONSTRAINT fk_event_id
     FOREIGN KEY (event_id) 
-      REFERENCES events(event_id),
+      REFERENCES events(event_id) ON DELETE CASCADE,
   CONSTRAINT fk_dish_id
     FOREIGN KEY (dish_id) 
-      REFERENCES dishes(dish_id)
+      REFERENCES dishes(dish_id) ON DELETE CASCADE
 );
 
 -- 
@@ -211,7 +211,7 @@ CREATE TABLE orders (
   PRIMARY KEY (order_id),
   CONSTRAINT fk_customer_id
     FOREIGN KEY (customer_id) 
-      REFERENCES customers(customer_id)
+      REFERENCES customers(customer_id) ON DELETE CASCADE
 );
 
 -- 
@@ -227,10 +227,10 @@ CREATE TABLE order_dishes (
   PRIMARY KEY (order_id, dish_id),
   CONSTRAINT fk_order_id
     FOREIGN KEY (order_id) 
-      REFERENCES orders(order_id),
+      REFERENCES orders(order_id) ON DELETE CASCADE,
   CONSTRAINT fk_dish_id
     FOREIGN KEY (dish_id) 
-      REFERENCES dishes(dish_id)
+      REFERENCES dishes(dish_id) ON DELETE CASCADE
 );
 
 
