@@ -77,6 +77,7 @@ CREATE TABLE customers (
 	address VARCHAR(255),
 	point BIGINT DEFAULT 0,
 	mem_type VARCHAR(255) DEFAULT 'Bronze',
+  -- CHECK(gender IN ('Male', 'Female', 'Other')),
   PRIMARY KEY (customer_id),
   CONSTRAINT fk_mem_type
     FOREIGN KEY (mem_type) 
@@ -113,8 +114,8 @@ CREATE TABLE reservations (
   res_id BIGSERIAL,
   phone VARCHAR(255) NOT NULL,
   table_id BIGINT,
-  res_date DATE,
-  res_time_start TIME,
+  res_date DATE DEFAULT CURRENT_DATE,
+  res_time_start TIME DEFAULT LOCALTIME(0),
   res_time_end TIME,
   CHECK(res_time_start < res_time_end),
   PRIMARY KEY (res_id),
@@ -122,22 +123,6 @@ CREATE TABLE reservations (
     FOREIGN KEY (table_id) 
       REFERENCES tables(table_id) ON DELETE CASCADE
 );
-
--- TRIGGER
-DROP TRIGGER IF EXISTS set_res_time_end_trigger ON reservations;
-
-CREATE OR REPLACE FUNCTION set_res_time_end()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.res_time_end := NEW.res_time_start + INTERVAL '30 minute';
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER set_res_time_end_trigger
-BEFORE INSERT ON reservations
-FOR EACH ROW
-EXECUTE FUNCTION set_res_time_end();
 
 -- 
 -- Name: dishes; Type: TABLE
@@ -206,6 +191,7 @@ CREATE TABLE orders (
   order_time TIME,
   order_status INT DEFAULT 0,
   total_price DECIMAL(10,2) DEFAULT 0,
+  final_price DECIMAL(10,2) DEFAULT 0,r
   has_children BOOLEAN DEFAULT FALSE,
   CHECK(order_status IN (0, 1, 2, 3)),
   PRIMARY KEY (order_id),
