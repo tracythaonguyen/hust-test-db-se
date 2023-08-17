@@ -26,18 +26,6 @@ CREATE TABLE menus (
 );
 
 -- 
--- Name: categories; Type: TABLE
--- 
-
-DROP TABLE IF EXISTS categories;
-
-CREATE TABLE categories (
-  category_id BIGSERIAL,
-  category_name VARCHAR(255) NOT NULL,
-  PRIMARY KEY (category_id)
-);
-
--- 
 -- Name: events; Type: TABLE
 -- 
 
@@ -46,26 +34,20 @@ DROP TABLE IF EXISTS events;
 CREATE TABLE events (
   event_id BIGSERIAL,
   event_name VARCHAR(255) NOT NULL,
+  description TEXT,
+  begin_time DATE,
+  close_time DATE,
+  poster TEXT,
   PRIMARY KEY (event_id)
 );
 
 -- 
--- Name: toys; Type: TABLE
--- 
-
-DROP TABLE IF EXISTS toys;
-
-CREATE TABLE toys (
-  toy_id BIGSERIAL,
-  toy_name VARCHAR(255) NOT NULL,
-  quantity BIGINT NOT NULL,
-  PRIMARY KEY (toy_id)
-);
-
-
--- 
 -- Name: customers; Type: TABLE
 -- 
+
+-- customer_status:
+-- 0: available
+-- 1: unavailable
 
 DROP TABLE IF EXISTS customers;
 
@@ -76,6 +58,8 @@ CREATE TABLE customers (
   phone VARCHAR(255) UNIQUE NOT NULL,
 	address VARCHAR(255),
 	point BIGINT DEFAULT 0,
+  customer_status INT DEFAULT 0,
+  CHECK(customer_status IN (0, 1)),
 	mem_type VARCHAR(255) DEFAULT 'Bronze',
   -- CHECK(gender IN ('Male', 'Female', 'Other')),
   PRIMARY KEY (customer_id),
@@ -142,6 +126,7 @@ CREATE TABLE dishes (
   dish_status INT DEFAULT 0,
   category_id BIGINT,
   menu_id BIGINT,
+  poster TEXT,
   CHECK(dish_status IN (0, 1)),
   PRIMARY KEY (dish_id),
   CONSTRAINT fk_menu_id
@@ -191,8 +176,7 @@ CREATE TABLE orders (
   order_time TIME,
   order_status INT DEFAULT 0,
   total_price DECIMAL(10,2) DEFAULT 0,
-  final_price DECIMAL(10,2) DEFAULT 0,r
-  has_children BOOLEAN DEFAULT FALSE,
+  final_price DECIMAL(10,2) DEFAULT 0,
   CHECK(order_status IN (0, 1, 2, 3)),
   PRIMARY KEY (order_id),
   CONSTRAINT fk_customer_id
@@ -219,7 +203,17 @@ CREATE TABLE order_dishes (
       REFERENCES dishes(dish_id) ON DELETE CASCADE
 );
 
+-- 
+-- Name: users; Type: TABLE
+-- 
 
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+  email VARCHAR(255),
+  password VARCHAR(255),
+  PRIMARY KEY (email)
+);
 
 
 
