@@ -10119,6 +10119,19 @@ INSERT INTO tables (capacity) VALUES (10);
 -- Table: reservations
 --
 
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0695953619', 34, '08/08/2023', '10:00');
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0516625900', 15, '10/29/2023', '10:00');
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0829429087', 46, '11/09/2023', '10:00');
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0716803061', 11, '10/08/2023', '10:00');
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0225584886', 41, '07/07/2023', '10:00');
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0361503580', 5, '04/24/2023', '10:00');
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0223302153', 12, '04/19/2023', '10:00');
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0889839403', 25, '08/11/2023', '10:00');
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0547856992', 48, '04/24/2023', '10:00');
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0709877119', 37, '04/21/2023', '10:00');
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0973965529', 48, '10/11/2023', '10:00');
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0701597195', 22, '12/11/2023', '10:00');
+INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0835516049', 47, '04/26/2023', '10:00');
 INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0695953619', 34, '04/08/2023', '10:00');
 INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0516625900', 15, '04/29/2023', '10:00');
 INSERT INTO reservations (phone, table_id, res_date, res_time_start) VALUES ('0829429087', 46, '04/09/2023', '10:00');
