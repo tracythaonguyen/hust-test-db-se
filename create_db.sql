@@ -45,10 +45,6 @@ CREATE TABLE events (
 -- Name: customers; Type: TABLE
 -- 
 
--- customer_status:
--- 0: available
--- 1: unavailable
-
 DROP TABLE IF EXISTS customers;
 
 CREATE TABLE customers (
@@ -58,10 +54,7 @@ CREATE TABLE customers (
   phone VARCHAR(255) UNIQUE NOT NULL,
 	address VARCHAR(255),
 	point BIGINT DEFAULT 0,
-  customer_status INT DEFAULT 0,
-  CHECK(customer_status IN (0, 1)),
 	mem_type VARCHAR(255) DEFAULT 'Bronze',
-  -- CHECK(gender IN ('Male', 'Female', 'Other')),
   PRIMARY KEY (customer_id),
   CONSTRAINT fk_mem_type
     FOREIGN KEY (mem_type) 
@@ -109,6 +102,18 @@ CREATE TABLE reservations (
 );
 
 -- 
+-- Name: categories; Type: TABLE
+-- 
+
+DROP TABLE IF EXISTS categories;
+
+CREATE TABLE categories (
+  category_id BIGSERIAL,
+  category_name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (category_id)
+);
+
+-- 
 -- Name: dishes; Type: TABLE
 -- 
 
@@ -126,7 +131,7 @@ CREATE TABLE dishes (
   dish_status INT DEFAULT 0,
   category_id BIGINT,
   menu_id BIGINT,
-  poster TEXT,
+  image TEXT,
   CHECK(dish_status IN (0, 1)),
   PRIMARY KEY (dish_id),
   CONSTRAINT fk_menu_id
@@ -146,6 +151,7 @@ DROP TABLE IF EXISTS event_dishes;
 CREATE TABLE event_dishes (
   event_id BIGINT,
   dish_id BIGINT,
+  quantity BIGINT,
   PRIMARY KEY (event_id, dish_id),
   CONSTRAINT fk_event_id
     FOREIGN KEY (event_id) 
