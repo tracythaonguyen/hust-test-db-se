@@ -64,7 +64,18 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
     DELETE FROM reservations
-    WHERE res_date <= CURRENT_DATE AND res_time_end <= CURRENT_TIME;
+    WHERE res_date <= CURRENT_DATE AND res_time_end <= (CURRENT_TIME + INTERVAL '7 hours');
+
+    -- Update table_status in the tables table
+    UPDATE tables t
+    SET table_status = CASE
+        WHEN t.table_status = 0 OR t.table_status = 2 THEN
+            CASE
+                WHEN EXISTS (SELECT 1 FROM reservations WHERE table_id = t.table_id) THEN 2
+                ELSE 0
+            END
+        ELSE t.table_status
+    END;
 END;
 $$;
 
