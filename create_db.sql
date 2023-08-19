@@ -183,6 +183,7 @@ CREATE TABLE orders (
   order_status INT DEFAULT 0,
   total_price DECIMAL(10,2) DEFAULT 0,
   final_price DECIMAL(10,2) DEFAULT 0,
+  used_point DECIMAL(10,2) DEFAULT 0,
   CHECK(order_status IN (0, 1, 2, 3)),
   PRIMARY KEY (order_id),
   CONSTRAINT fk_customer_id
