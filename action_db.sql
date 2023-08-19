@@ -71,7 +71,10 @@ BEGIN
     SET table_status = CASE
         WHEN t.table_status = 0 OR t.table_status = 2 THEN
             CASE
-                WHEN EXISTS (SELECT 1 FROM reservations WHERE table_id = t.table_id) THEN 2
+                WHEN EXISTS (SELECT 1 FROM reservations WHERE table_id = t.table_id
+                                AND res_date >= CURRENT_DATE
+                                AND res_time_start >= (CURRENT_TIME + INTERVAL '7 hours')
+                        ) THEN 2
                 ELSE 0
             END
         ELSE t.table_status
